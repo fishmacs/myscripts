@@ -1,0 +1,24 @@
+#!/bin/bash
+
+switch=$1
+
+if [ "$switch" == "on" ]; then
+  if [ -z "`ifconfig ppp0 2> /dev/null`" ]; then
+    tunnel=$2
+    if [ -z $tunnel ]; then
+      tunnel=ceibs
+    fi
+    sudo pon $tunnel
+    echo $tunnel > /tmp/zw-vpn-tunnel-name
+  fi
+  while [ $(expr "`ifconfig ppp0 2> /dev/null`" : '.*flags=[0-9]*<UP.*') == 0 ]
+  do
+    sleep 1
+    echo 'starting...'
+  done
+  sudo ip route add 172.16.0.0/24 dev ppp0
+else
+  sudo poff `cat /tmp/zw-vpn-tunnel-name`
+  rm /tmp/zw-vpn-tunnel-name
+fi
+

@@ -1,0 +1,1 @@
+journalctl --user -r -u offlineimap-oneshot

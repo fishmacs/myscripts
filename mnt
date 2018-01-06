@@ -1,0 +1,13 @@
+#! /bin/sh
+
+case "$1" in
+  nas)
+    sudo mount -t cifs -o username=zw,password=wzhao123,vers=1.0,uid=1000 //192.168.1.11/home ~/mnt/nas;;
+  lwin)
+    sudo mount -o uid=1000 /dev/nvme0n1p3 ~/mnt/lwin;;
+  vwin)
+    ;;
+  *)
+    echo "usage: mtnas name";;
+esac
+

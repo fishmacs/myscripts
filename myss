@@ -1,0 +1,20 @@
+#! /bin/bash
+
+conf=$1
+if [ -z $conf ]; then
+   conf="ssr-sg"
+fi
+
+echo $conf
+
+ssproc=$(pgrep -af ss-local)
+#pid=$(expr "$ssproc" : '\([0-9]*\).*')
+#kill $pid
+old_conf=$(expr "$ssproc" : '.*\/\([a-z\-]*\)\.json$')
+if [ ! -z $old_conf ]; then
+  echo $old_conf
+  sudo systemctl stop shadowsocks-libev@${old_conf}
+fi
+
+#ss-local -c /etc/shadowsocks/$conf.json & 2>&1 >/dev/null
+sudo systemctl start shadowsocks-libev@${conf}

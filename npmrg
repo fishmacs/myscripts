@@ -1,0 +1,6 @@
+if [ "$1" == "c" ]; then
+  rg=https://registry.npm.taobao.org
+else
+  rg=https://registry.npmjs.org
+fi
+npm config set registry $rg

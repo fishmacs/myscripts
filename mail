@@ -1,0 +1,2 @@
+systemctl --user status offlineimap-oneshot.timer
+systemctl --user status offlineimap-oneshot
